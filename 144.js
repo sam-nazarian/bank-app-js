@@ -16,3 +16,32 @@ movements.forEach((mov, i, arr)=>{
     console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
   }
 });
+
+
+/////////////////////////////////////////////////
+
+//map
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+console.log('CURRENCIES');
+currencies.forEach(function(value, key, map) {
+  console.log(`${key}: ${value}`);
+});
+
+
+console.log('------------ CURRENCIES UNIQUE');
+const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+
+//_ is a throw away variable, an uneccesorly var
+currenciesUnique.forEach(function(value,_, map){
+  console.log(`${value}`);
+})
+
+
+console.log(currenciesUnique);

@@ -61,10 +61,29 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = ''; //empty everything in div
+
+  movements.forEach(function (mov, i) {
+
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `
+        <div class="movements__row">
+          <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+          <div class="movements__value">${mov}</div>
+        </div>
+      `
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  })
+}
+
+displayMovements(account1.movements)
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 
-//map
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
@@ -76,19 +95,14 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 /////////////////////////////////////////////////
 
 
-console.log('CURRENCIES');
-currencies.forEach(function(value, key, map) {
-  console.log(`${key}: ${value}`);
-});
+// this function is producing a side effect, we are not returning anything (not creating a new val to return)
+const createUsernames = function (accs) {
 
+  // for each is usually used to create side effects
+  accs.forEach(function (acc) {
+    acc.username = acc.owner.toLowerCase().split(' ').map((el) => el[0]).join('');
+  });
 
-console.log('------------ CURRENCIES UNIQUE');
-const currenciesUnique = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
-
-//_ is a throw away variable, an uneccesorly var
-currenciesUnique.forEach(function(value,_, map){
-  console.log(`${value}`);
-})
-
-
-console.log(currenciesUnique);
+}
+createUsernames(accounts)
+console.log(accounts);
