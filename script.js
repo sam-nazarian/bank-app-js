@@ -81,6 +81,12 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements)
 
+const calcPrintBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+}
+calcPrintBalance(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 
@@ -97,12 +103,10 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // this function is producing a side effect, we are not returning anything (not creating a new val to return)
 const createUsernames = function (accs) {
-
   // for each is usually used to create side effects
   accs.forEach(function (acc) {
     acc.username = acc.owner.toLowerCase().split(' ').map((el) => el[0]).join('');
   });
-
 }
 createUsernames(accounts)
-console.log(accounts);
+// console.log(accounts);
