@@ -65,27 +65,52 @@ const displayMovements = function (movements) {
   containerMovements.innerHTML = ''; //empty everything in div
 
   movements.forEach(function (mov, i) {
-
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `
         <div class="movements__row">
-          <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__type movements__type--${type}">${
+      i + 1
+    } ${type}</div>
+          <div class="movements__value">${mov}€</div>
         </div>
-      `
+      `;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
-  })
-}
-
-displayMovements(account1.movements)
+  });
+};
+displayMovements(account1.movements);
 
 const calcPrintBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance} EUR`;
-}
+  labelBalance.textContent = `${balance}€`;
+};
 calcPrintBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  //make sure to reduce the amount of chaining methods
+  // don't change methods that mutate original arr, ig. such as splice or reverse methods
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => int >= 1)
+    .reduce((acc, interest) => acc + interest, 0);
+
+  labelSumInterest.textContent = `${interest}€`;
+};
+calcDisplaySummary(account1.movements);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -100,13 +125,21 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 
-
 // this function is producing a side effect, we are not returning anything (not creating a new val to return)
 const createUsernames = function (accs) {
   // for each is usually used to create side effects
   accs.forEach(function (acc) {
-    acc.username = acc.owner.toLowerCase().split(' ').map((el) => el[0]).join('');
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map((el) => el[0])
+      .join('');
   });
-}
-createUsernames(accounts)
-// console.log(accounts);
+};
+createUsernames(accounts);
+
+/////////////////////////////////////////////////
+
+console.log(accounts);
+const account = accounts.find((acc) => acc.owner === 'Jessica Davis');
+console.log(account);
