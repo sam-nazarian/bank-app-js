@@ -50,11 +50,44 @@ const numDeposits1000 = accounts
   .flatMap((acc) => acc.movements)
   .reduce((acc, mov) => (mov > 1000 ? ++acc : acc), 0); //the 0 is like a value outside of a for loop, that gets updated
 
-console.log(numDeposits1000);
+// console.log(numDeposits1000);
 
 // Prefixed ++ operator
 
 // 3.
+const { deposits, withdrawals } = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // if (cur < 0) sums.withdrawals += cur;
+      // else if (cur > 0) sums.deposits += cur;
+
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
+      return sums;
+    },
+    { withdrawals: 0, deposits: 0 }
+  );
+
+// console.log(deposits, withdrawals);
+
+// this is a nice title -> This Is a Nice Title
+const convertTitleCase = function (title) {
+  const capitalize = (str) => str[0].toUpperCase() + str.slice(1);
+
+  const exceptions = ['a', 'an', 'and', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map((word) => (exceptions.includes(word) ? word : capitalize(word)))
+    .join(' ');
+
+  return capitalize(titleCase); //capitalizes and exception (i.e. and) if it's at the beginning
+};
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(convertTitleCase('and this is another title with an EXAMPLE'));
+
+// 4.
 
 /*
 let a = 10;
