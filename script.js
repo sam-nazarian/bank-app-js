@@ -253,3 +253,19 @@ btnSort.addEventListener('click', function (e) {
 
   sorted = !sorted; //opposite of sorted
 });
+
+labelBalance.addEventListener('click', function (e) {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'), //converts nodelist (an iterable) to array
+    (el) => Number(el.textContent.replace('€', ''))
+  );
+
+  console.log(movementsUI);
+
+  // const x = movementsUI.map((el) => Number(el.textContent.replace('€', '')));
+  // console.log(x);
+  // console.log(document.querySelectorAll('.movements__value'));
+
+  const movementsUI2 = [...document.querySelectorAll('.movements__value')]; //another way to convert to array
+  console.log(movementsUI2);
+});
